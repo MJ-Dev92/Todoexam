@@ -1,23 +1,73 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { useState } from "react";
 
 function App() {
+  const inner = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    marginTop: "20px",
+  };
+  const style = {
+    padding: "100px",
+    display: "flex",
+    gap: "12px",
+  };
+  const squareStyle = {
+    width: "100px",
+    height: "100px",
+    padding: "5px",
+    border: "1px solid green",
+    borderRadius: "10px",
+    display: "flex",
+    justifyContent: "center",
+    textAlign: "center",
+  };
+
+  const addTodoHandler = () => {
+    const newTodo = {
+      id: todo.length + 1,
+      todo: todos,
+    };
+    setTodo([...todo, newTodo]);
+  };
+
+  const Todo = (props) => {
+    return <div style={squareStyle}>{props.todo.todo}</div>;
+  };
+
+  const [todo, setTodo] = useState([
+    { id: 1, todo: "react를 배워봅시다." },
+    { id: 2, todo: "useState를 배워봅시다." },
+    { id: 3, todo: "자바스크립트를 배워봅시다." },
+  ]);
+  const [todos, setTodos] = useState("");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      <div style={inner}>
+        <div>
+          <input
+            type="text"
+            value={todos}
+            onChange={(e) => setTodos(e.target.value)}
+          />
+          <button onClick={addTodoHandler}>추가하기</button>
+        </div>
+
+        <div
+          style={{ fontWeight: "bold", fontSize: "36px", marginTop: "20px" }}
         >
-          Learn React
-        </a>
-      </header>
+          Todo List
+        </div>
+      </div>
+
+      <div style={style}>
+        {todo.map((todo) => {
+          return <Todo todo={todo} key={todo.id}></Todo>;
+        })}
+      </div>
     </div>
   );
 }
